@@ -202,6 +202,7 @@ public class HiveFileFormatBenchmark
                 SESSION,
                 HDFS_ENVIRONMENT,
                 dataFile,
+                null,
                 columnNames,
                 fileFormat.supportsDate() ? columnTypes : noDateColumnTypes)) {
             while (!pageSource.isFinished()) {

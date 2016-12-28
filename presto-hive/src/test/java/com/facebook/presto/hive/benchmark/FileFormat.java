@@ -67,10 +67,10 @@ public enum FileFormat
 {
     PRESTO_RCBINARY {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HivePageSourceFactory pageSourceFactory = new RcFilePageSourceFactory(TYPE_MANAGER, hdfsEnvironment);
-            return createPageSource(pageSourceFactory, session, targetFile, columnNames, columnTypes, HiveStorageFormat.RCBINARY);
+            return createPageSource(pageSourceFactory, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.RCBINARY);
         }
 
         @Override
@@ -88,10 +88,10 @@ public enum FileFormat
 
     PRESTO_RCTEXT {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HivePageSourceFactory pageSourceFactory = new RcFilePageSourceFactory(TYPE_MANAGER, hdfsEnvironment);
-            return createPageSource(pageSourceFactory, session, targetFile, columnNames, columnTypes, HiveStorageFormat.RCTEXT);
+            return createPageSource(pageSourceFactory, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.RCTEXT);
         }
 
         @Override
@@ -109,10 +109,10 @@ public enum FileFormat
 
     PRESTO_ORC {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HivePageSourceFactory pageSourceFactory = new OrcPageSourceFactory(TYPE_MANAGER, false, hdfsEnvironment);
-            return createPageSource(pageSourceFactory, session, targetFile, columnNames, columnTypes, HiveStorageFormat.ORC);
+            return createPageSource(pageSourceFactory, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.ORC);
         }
 
         @Override
@@ -130,10 +130,10 @@ public enum FileFormat
 
     PRESTO_DWRF {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HivePageSourceFactory pageSourceFactory = new DwrfPageSourceFactory(TYPE_MANAGER, hdfsEnvironment);
-            return createPageSource(pageSourceFactory, session, targetFile, columnNames, columnTypes, HiveStorageFormat.DWRF);
+            return createPageSource(pageSourceFactory, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.DWRF);
         }
 
         @Override
@@ -157,10 +157,10 @@ public enum FileFormat
 
     PRESTO_PARQUET {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HivePageSourceFactory pageSourceFactory = new ParquetPageSourceFactory(TYPE_MANAGER, false, hdfsEnvironment);
-            return createPageSource(pageSourceFactory, session, targetFile, columnNames, columnTypes, HiveStorageFormat.PARQUET);
+            return createPageSource(pageSourceFactory, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.PARQUET);
         }
 
         @Override
@@ -178,10 +178,10 @@ public enum FileFormat
 
     HIVE_RCBINARY {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HiveRecordCursorProvider cursorProvider = new ColumnarBinaryHiveRecordCursorProvider(hdfsEnvironment);
-            return createPageSource(cursorProvider, session, targetFile, columnNames, columnTypes, HiveStorageFormat.RCBINARY);
+            return createPageSource(cursorProvider, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.RCBINARY);
         }
 
         @Override
@@ -199,10 +199,10 @@ public enum FileFormat
 
     HIVE_RCTEXT {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HiveRecordCursorProvider cursorProvider = new ColumnarTextHiveRecordCursorProvider(hdfsEnvironment);
-            return createPageSource(cursorProvider, session, targetFile, columnNames, columnTypes, HiveStorageFormat.RCTEXT);
+            return createPageSource(cursorProvider, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.RCTEXT);
         }
 
         @Override
@@ -220,10 +220,10 @@ public enum FileFormat
 
     HIVE_ORC {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HiveRecordCursorProvider cursorProvider = new GenericHiveRecordCursorProvider(hdfsEnvironment);
-            return createPageSource(cursorProvider, session, targetFile, columnNames, columnTypes, HiveStorageFormat.ORC);
+            return createPageSource(cursorProvider, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.ORC);
         }
 
         @Override
@@ -241,10 +241,10 @@ public enum FileFormat
 
     HIVE_DWRF {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HiveRecordCursorProvider cursorProvider = new GenericHiveRecordCursorProvider(hdfsEnvironment);
-            return createPageSource(cursorProvider, session, targetFile, columnNames, columnTypes, HiveStorageFormat.DWRF);
+            return createPageSource(cursorProvider, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.DWRF);
         }
 
         @Override
@@ -268,10 +268,10 @@ public enum FileFormat
 
     HIVE_PARQUET {
         @Override
-        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, List<String> columnNames, List<Type> columnTypes)
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
         {
             HiveRecordCursorProvider cursorProvider = new ParquetRecordCursorProvider(false, hdfsEnvironment);
-            return createPageSource(cursorProvider, session, targetFile, columnNames, columnTypes, HiveStorageFormat.PARQUET);
+            return createPageSource(cursorProvider, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.PARQUET);
         }
 
         @Override
@@ -285,6 +285,27 @@ public enum FileFormat
         {
             return new RecordFormatWriter(targetFile, columnNames, columnTypes, compressionCodec, HiveStorageFormat.PARQUET);
         }
+    },
+
+    HIVE_TEXTFILE {
+        @Override
+        public ConnectorPageSource createFileFormatReader(ConnectorSession session, HdfsEnvironment hdfsEnvironment, File targetFile, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
+        {
+            HiveRecordCursorProvider cursorProvider = new GenericHiveRecordCursorProvider(hdfsEnvironment);
+            return createPageSource(cursorProvider, session, targetFile, schemaProperties, columnNames, columnTypes, HiveStorageFormat.TEXTFILE);
+        }
+
+        @Override
+        public FormatWriter createFileFormatWriter(
+            ConnectorSession session,
+            File targetFile,
+            List<String> columnNames,
+            List<Type> columnTypes,
+            HiveCompressionCodec compressionCodec)
+            throws IOException
+        {
+            return new RecordFormatWriter(targetFile, columnNames, columnTypes, compressionCodec, HiveStorageFormat.TEXTFILE);
+        }
     };
 
     public boolean supportsDate()
@@ -296,6 +317,7 @@ public enum FileFormat
             ConnectorSession session,
             HdfsEnvironment hdfsEnvironment,
             File targetFile,
+            Properties schemaProperties,
             List<String> columnNames,
             List<Type> columnTypes);
 
@@ -322,7 +344,12 @@ public enum FileFormat
 
     private static ConnectorPageSource createPageSource(
             HiveRecordCursorProvider cursorProvider,
-            ConnectorSession session, File targetFile, List<String> columnNames, List<Type> columnTypes, HiveStorageFormat format)
+            ConnectorSession session,
+            File targetFile,
+            Properties schemaProperties,
+            List<String> columnNames,
+            List<Type> columnTypes,
+            HiveStorageFormat format)
     {
         List<HiveColumnHandle> columnHandles = new ArrayList<>(columnNames.size());
         TypeTranslator typeTranslator = new HiveTypeTranslator();
@@ -340,7 +367,7 @@ public enum FileFormat
                         new Path(targetFile.getAbsolutePath()),
                         0,
                         targetFile.length(),
-                        createSchema(format, columnNames, columnTypes),
+                        createSchema(format, schemaProperties, columnNames, columnTypes),
                         columnHandles,
                         TupleDomain.all(),
                         DateTimeZone.forID(session.getTimeZoneKey().getId()),
@@ -353,6 +380,7 @@ public enum FileFormat
             HivePageSourceFactory pageSourceFactory,
             ConnectorSession session,
             File targetFile,
+            Properties schemaProperties,
             List<String> columnNames,
             List<Type> columnTypes,
             HiveStorageFormat format)
@@ -372,7 +400,7 @@ public enum FileFormat
                         new Path(targetFile.getAbsolutePath()),
                         0,
                         targetFile.length(),
-                        createSchema(format, columnNames, columnTypes),
+                        createSchema(format, schemaProperties, columnNames, columnTypes),
                         columnHandles,
                         TupleDomain.all(),
                         DateTimeZone.forID(session.getTimeZoneKey().getId()))
@@ -398,7 +426,7 @@ public enum FileFormat
                     new Path(targetFile.toURI()),
                     columnNames,
                     fromHiveStorageFormat(format),
-                    createSchema(format, columnNames, columnTypes),
+                    createSchema(format, null, columnNames, columnTypes),
                     TYPE_MANAGER,
                     config);
         }
@@ -419,7 +447,7 @@ public enum FileFormat
         }
     }
 
-    private static Properties createSchema(HiveStorageFormat format, List<String> columnNames, List<Type> columnTypes)
+    private static Properties createSchema(HiveStorageFormat format, Properties schemaProperties, List<String> columnNames, List<Type> columnTypes)
     {
         Properties schema = new Properties();
         TypeTranslator typeTranslator = new HiveTypeTranslator();
@@ -431,6 +459,9 @@ public enum FileFormat
                 .map(type -> HiveType.toHiveType(typeTranslator, type))
                 .map(HiveType::getHiveTypeName)
                 .collect(joining(":")));
+        if (schemaProperties != null) {
+            schema.putAll(schemaProperties);
+        }
         return schema;
     }
 }

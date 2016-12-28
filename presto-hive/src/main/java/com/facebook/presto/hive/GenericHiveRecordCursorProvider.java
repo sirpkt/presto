@@ -20,6 +20,7 @@ import com.facebook.presto.spi.type.TypeManager;
 import com.google.inject.Inject;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hive.serde.serdeConstants;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapred.RecordReader;
 import org.joda.time.DateTimeZone;
@@ -58,13 +59,22 @@ public class GenericHiveRecordCursorProvider
         RecordReader<?, ?> recordReader = hdfsEnvironment.doAs(session.getUser(),
                 () -> HiveUtil.createRecordReader(configuration, path, start, length, schema, columns));
 
-        return Optional.of(new GenericHiveRecordCursor<>(
-                genericRecordReader(recordReader),
-                length,
-                schema,
-                columns,
-                hiveStorageTimeZone,
-                typeManager));
+        RecordCursor recordCursor = new GenericHiveRecordCursor<>(
+            genericRecordReader(recordReader),
+            length,
+            schema,
+            columns,
+            hiveStorageTimeZone,
+            typeManager);
+
+        if (start == 0) {
+            int headerCount = Integer.parseInt(schema.getProperty(serdeConstants.HEADER_COUNT, "0"));
+            for (int count = 0; count < headerCount; count++) {
+                recordCursor.advanceNextPosition();
+            }
+        }
+
+        return Optional.of(recordCursor);
     }
 
     @SuppressWarnings("unchecked")
